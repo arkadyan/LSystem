@@ -14,7 +14,7 @@ class LSystemApp : public AppNative {
   
 public:
 	void setup();
-	void mouseDown( MouseEvent event );	
+	void keyDown( KeyEvent event );
 	void update();
 	void draw();
   
@@ -28,8 +28,11 @@ private:
   void setupLengthChangingLeaf(Vec2f startingLocation);
   void setupBush(Vec2f startingLocation);
   
+  void writePngFile();
   void writeSvgFile();
   void renderDrawing(cairo::Context& context);
+  
+  void quitApp();
   
 };
 
@@ -114,12 +117,18 @@ void LSystemApp::setupBush(Vec2f startingLocation) {
 }
 
 
-void LSystemApp::mouseDown( MouseEvent event )
-{
+void LSystemApp::keyDown( KeyEvent event ) {
+  if( event.getChar() == 'p' ) {
+    writePngFile();
+  } else if ( event.getChar() == 'q' ) {
+    quitApp();
+  }
 }
 
 void LSystemApp::update() {
-  result = system.getNextLevel();
+  if (system.currentLevelCount() < 6) {
+    result = system.getNextLevel();
+  }
 }
 
 void LSystemApp::draw() {
@@ -127,13 +136,11 @@ void LSystemApp::draw() {
 	gl::clear( Color( 255, 255, 255 ) );
   
   turtle.draw(result, Vec2f( 0,  getWindowHeight() ), Vec2f( 1, 0 ));   // input string, starting location, starting velocity
-  
-  if (system.currentLevelCount() >= 6) {
-    cout << "Writing image ~/LSystem.png" << endl;
-    writeImage(getHomeDirectory() / "LSystem.png", copyWindowSurface());
-    cout << "Exiting" << endl;
-    quit();
-  }
+}
+
+void LSystemApp::writePngFile() {
+  cout << "Writing image ~/LSystem.png" << endl;
+  writeImage(getHomeDirectory() / "LSystem.png", copyWindowSurface());
 }
 
 void LSystemApp::writeSvgFile() {
@@ -153,6 +160,11 @@ void LSystemApp::renderDrawing(cairo::Context& context) {
   
   context.setSource( ColorA( 1, 1, 1, 1 ) );
   
+}
+
+void LSystemApp::quitApp() {
+  cout << "Exiting" << endl;
+  quit();
 }
 
 CINDER_APP_NATIVE( LSystemApp, RendererGl )
