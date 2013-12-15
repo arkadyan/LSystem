@@ -11,3 +11,5 @@
 *.lai
 *.la
 *.a
+
+/xcode/LSystem.xcodeproj/project.xcworkspace/xcuserdata/shanley.xcuserdatad/UserInterfaceState.xcuserstate
