@@ -8,9 +8,6 @@
 
 #include "LSystem.h"
 
-using std::cout;
-using std::endl;
-
 
 LSystem::LSystem(string _startString) {
   level = 0;

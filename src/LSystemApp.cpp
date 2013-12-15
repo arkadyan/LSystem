@@ -139,7 +139,7 @@ void LSystemApp::draw() {
 }
 
 void LSystemApp::writePngFile() {
-  cout << "Writing image ~/LSystem.png" << endl;
+  console() << "Writing image ~/LSystem.png" << endl;
   writeImage(getHomeDirectory() / "LSystem.png", copyWindowSurface());
 }
 
@@ -163,7 +163,7 @@ void LSystemApp::renderDrawing(cairo::Context& context) {
 }
 
 void LSystemApp::quitApp() {
-  cout << "Exiting" << endl;
+  console() << "Exiting" << endl;
   quit();
 }
 
